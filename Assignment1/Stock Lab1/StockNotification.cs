@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Stock
 {
@@ -16,7 +12,7 @@ namespace Stock
         /// Stock notification attributes that are set and changed
         /// </summary>
         /// <param name="stockName">Name of stock</param>
-        /// <param name="currentValue">Current vallue of the stock</param>
+        /// <param name="currentValue">Current value of the stock</param>
         /// <param name="numChanges">Number of changes the stock goes through</param>
         public StockNotification(string stockName, int currentValue, int numChanges)
         {

@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
-namespace Stock {
+namespace Stock
+{
     public class StockBroker
     {
         public string BrokerName { get; set; }
         public List<Stock> stocks = new List<Stock>();
-        //public static System.Threading.ReaderWriterLockSlim myLock = new ReaderWriterLockSlim();
-        readonly string docPath = @"C:\Users\Documents\CECS 475\Lab3_output.txt";
-        public string titles = "Broker".PadRight(10) + "Stock".PadRight(15) +
-       "Value".PadRight(10) + "Changes".PadRight(10) + "Date and Time";
+        readonly string docPath = Directory.GetCurrentDirectory();
+        public static string titles = "Broker".PadRight(10) + "Stock".PadRight(15) + "Value".PadRight(10) + "Changes".PadRight(10);
 
         /// <summary>
         /// The stockbroker object
@@ -20,7 +17,9 @@ namespace Stock {
         /// <param name="brokerName">The stockbroker's name</param>
         public StockBroker(string brokerName)
         {
-            BrokerName = brokerName;
+            this.BrokerName = brokerName;
+            docPath += "\\" + BrokerName + ".txt";
+            File.WriteAllText(docPath, titles + "\n");
         }
 
         /// <summary>
@@ -40,12 +39,18 @@ namespace Stock {
         /// <param name="e">Event arguments</param>
         void EventHandler(Object sender, EventArgs e)
         {
-            // This method can also possibly handle writing to the file, since its the same information?
-            Stock evStock = (Stock)sender;
-            Console.WriteLine(this.BrokerName + " " + evStock.StockName + " " + evStock.CurrentValue + " " + evStock.NumChanges);
             StockNotification data = (StockNotification)e;
-            String statement = data.StockName + data.CurrentValue + data.NumChanges;
+            String statement = this.BrokerName.PadRight(10) + data.StockName.PadRight(15) +
+                data.CurrentValue.ToString().PadRight(10) + data.NumChanges.ToString().PadRight(10);
             Console.WriteLine(statement);
+            LogEvent(statement);
+        }
+
+        void LogEvent(string line)
+        {
+            StreamWriter sw = File.AppendText(docPath);
+            sw.WriteLine(line);
+            sw.Close();
         }
     }
 }

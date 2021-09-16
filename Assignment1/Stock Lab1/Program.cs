@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+using System.IO;
 
 namespace Stock
 {
@@ -9,6 +7,8 @@ namespace Stock
     {
         static void Main(string[] args)
         {
+            Console.WriteLine(Directory.GetCurrentDirectory());
+            Console.WriteLine(StockBroker.titles);
             Stock stock1 = new Stock("Technology", 160, 5, 15);
             Stock stock2 = new Stock("Retail", 30, 2, 6);
             Stock stock3 = new Stock("Banking", 90, 4, 10);
@@ -31,4 +31,3 @@ namespace Stock
         }
     }
 }
-    
